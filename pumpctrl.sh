@@ -33,13 +33,20 @@ function lightOff() {
 
 # controlPump takes an parameter of minutes to run the pump
 function controlPump() {
-    PUMP_RUN_TIME=$1
-    
-    startpump
+    cntrl = $2
+    while [ $ctrl ]
+    do 
 
-    sleep $PUMP_RUN_TIME
+        PUMP_RUN_TIME=$1
+        
+        startpump
 
-    stoppump
+        sleep $PUMP_RUN_TIME
+
+        stoppump
+
+        sleep 15m
+    done
 }
 
 DEFAULT_PUMP_RUNTIME=4m
@@ -50,7 +57,7 @@ main() {
     then
         echo "running custom pump time"
         # Run the pump for n amount for minutes
-        controlPump $PUMP_RUN_TIME
+        controlPump $PUMP_RUN_TIME true
     else
         # default the pump to run for 4 minutes
         echo "running pump for 4 minutes"
