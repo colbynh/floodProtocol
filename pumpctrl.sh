@@ -45,7 +45,7 @@ function controlPump() {
 
         stoppump
 
-        sleep 15m
+        sleep 30m
     done
 
 }
