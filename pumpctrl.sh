@@ -33,14 +33,18 @@ function lightOff() {
 
 # controlPump takes an parameter of minutes to run the pump
 function controlPump() {
+    while [ true ]
+    do
+        PUMP_RUN_TIME=$1
 
-    PUMP_RUN_TIME=$1
+        startpump
 
-    startpump
+        sleep $PUMP_RUN_TIME
 
-    sleep $PUMP_RUN_TIME
-
-    stoppump
+        stoppump
+        
+        sleep 30m
+    done      
 
 }
 
