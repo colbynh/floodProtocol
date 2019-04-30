@@ -5,16 +5,18 @@ PUMP_RUN_TIME=$1
 
 function startpump() {
 
-    curl --request POST "https://use1-wap.tplinkcloud.com/?token=${API_TOKEN} HTTP/1.1" \
+    local msg=$(curl -Ss --request POST "https://use1-wap.tplinkcloud.com/?token=${API_TOKEN} HTTP/1.1" \
     --data '{"method":"passthrough", "params": {"deviceId": '${PUMP_ONE_ID}', "requestData": "{\"system\":{\"set_relay_state\":{\"state\":1}}}" }}' \
-    --header "Content-Type: application/json"
+    --header "Content-Type: application/json")
+    echo $msg
 }
 
 
 function stoppump() {
-    curl --request POST "https://use1-wap.tplinkcloud.com/?token=${API_TOKEN} HTTP/1.1" \
+    local msg=$(curl --request POST "https://use1-wap.tplinkcloud.com/?token=${API_TOKEN} HTTP/1.1" \
     --data '{"method":"passthrough", "params": {"deviceId": '${PUMP_ONE_ID}', "requestData": "{\"system\":{\"set_relay_state\":{\"state\":0}}}" }}' \
-    --header "Content-Type: application/json"
+    --header "Content-Type: application/json")
+    echo $mgs
 }
 
 
