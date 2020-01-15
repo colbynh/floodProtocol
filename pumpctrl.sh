@@ -2,11 +2,26 @@ source ./conf/.env.sh
 
 PUMP_RUN_TIME=$1
 
+function getToken() {
+    msg=$(curl --header "Content-Type: application/json" \
+        --request POST \
+        --data '{
+                    "method": "login",
+                    "params": {
+                        "appType": "Kasa_Android",
+                        "cloudUserName": "",
+                        "cloudPassword": "",
+                        "terminalUUID": ""
+                    }
+                }' \
+        https://wap.tplinkcloud.com/)
+    echo $msg
+}  
 
 function startpump() {
 
     local msg=$(curl -Ss --request POST "https://use1-wap.tplinkcloud.com/?token=${API_TOKEN} HTTP/1.1" \
-    --data '{"method":"passthrough", "params": {"deviceId": '${PUMP_ONE_ID}', "requestData": "{\"system\":{\"set_relay_state\":{\"state\":1}}}" }}' \
+    --data '{"method":"passthrough", "params": {"deviceId": '${PUMP_PLUG_ID}', "requestData": "{\"system\":{\"set_relay_state\":{\"state\":1}}}" }}' \
     --header "Content-Type: application/json")
     echo $msg
 }
@@ -14,23 +29,9 @@ function startpump() {
 
 function stoppump() {
     local msg=$(curl --request POST "https://use1-wap.tplinkcloud.com/?token=${API_TOKEN} HTTP/1.1" \
-    --data '{"method":"passthrough", "params": {"deviceId": '${PUMP_ONE_ID}', "requestData": "{\"system\":{\"set_relay_state\":{\"state\":0}}}" }}' \
+    --data '{"method":"passthrough", "params": {"deviceId": '${PUMP_PLUG_ID}', "requestData": "{\"system\":{\"set_relay_state\":{\"state\":0}}}" }}' \
     --header "Content-Type: application/json")
     echo $mgs
-}
-
-
-# WIP 
-function lightOn() {
-    curl --request POST "https://use1-wap.tplinkcloud.com/?token=${API_TOKEN} HTTP/1.1" \
-    --data '{"method":"passthrough", "params": {"deviceId": , "requestData": "{\"system\":{\"set_relay_state\":{\"state\":1}}}" }}' \
-    --header "Content-Type: application/json"
-}
-
-function lightOff() {
-    curl --request POST "https://use1-wap.tplinkcloud.com/?token=${API_TOKEN} HTTP/1.1" \
-    --data '{"method":"passthrough", "params": {"deviceId": , "requestData": "{\"system\":{\"set_relay_state\":{\"state\":0}}}" }}' \
-    --header "Content-Type: application/json"
 }
 
 # controlPump takes an parameter of minutes to run the pump
