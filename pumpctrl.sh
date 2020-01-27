@@ -1,7 +1,5 @@
 source ./conf/.env.sh
 
-PUMP_RUN_TIME=$1
-
 function getToken() {
     msg=$(curl --header "Content-Type: application/json" \
         --request POST \
