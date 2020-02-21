@@ -15,8 +15,8 @@ function getToken() {
                     "method": "login",
                     "params": {
                         "appType": "Kasa_Android",
-                        "cloudUserName": "guitaristcolby@gmail.com",
-                        "cloudPassword": "Fyn2&bg8HqzN&H1",
+                        "cloudUserName": "",
+                        "cloudPassword": "",
                         "terminalUUID": ""
                     }
                 }' \
