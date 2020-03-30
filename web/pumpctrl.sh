@@ -38,7 +38,6 @@ function startpump() {
     --data '{"method":"passthrough", "params": {"deviceId": '${PUMP_PLUG_ID}', "requestData": "{\"system\":{\"set_relay_state\":{\"state\":1}}}" }}' \
     --header "Content-Type: application/json")
     echo $msg
-    exit 0
 }
 
 
@@ -47,22 +46,24 @@ function stoppump() {
     --data '{"method":"passthrough", "params": {"deviceId": '${PUMP_PLUG_ID}', "requestData": "{\"system\":{\"set_relay_state\":{\"state\":0}}}" }}' \
     --header "Content-Type: application/json")
     echo $msg
-    exit 0
 }
 
 # controlPump takes an parameter of minutes to run the pump
 function controlPump() {
     while [ true ]
     do
+       
         local PUMP_RUN_TIME=$1
         local PUMP_SLEEPTIME=$2
-            
+        echo "Pump run time ${PUMP_RUN_TIME}"    
+
         startpump
 
         sleep $PUMP_RUN_TIME
 
         stoppump
         
+        echo "Pump stopping for ${PUMP_SLEEPTIME}"
         sleep $PUMP_SLEEPTIME
     done      
 
