@@ -8,6 +8,7 @@ export WERKZEUG_DEBUG_PIN=off
 DEFAULT_PUMP_RUNTIME=4m
 DEFAULT_PUMP_SLEEPTIME=25m
 
+
 function getToken() {
     msg=$(curl -Ss --header "Content-Type: application/json" \
         --request POST \
@@ -15,14 +16,21 @@ function getToken() {
                     "method": "login",
                     "params": {
                         "appType": "Kasa_Android",
-                        "cloudUserName": "",
-                        "cloudPassword": "",
+                        "cloudUserName": "${CLOUD_USER}",
+                        "cloudPassword": "${CLOUD_PASS}",
                         "terminalUUID": ""
                     }
                 }' \
         https://wap.tplinkcloud.com/)
     echo $msg
 }  
+
+function refreshToken() {
+    echo "refreshing token"
+    API_TOKEN=$(getToken | jq -r '.result.token')
+    sed -i "$ d" ../conf/.env.sh
+    echo "export API_TOKEN='${API_TOKEN}'" >> "../conf/.env.sh"
+}
 
 function startpump() {
 
@@ -61,6 +69,7 @@ function controlPump() {
 }
 
 default() { 
+    echo "Running pump with default params"
     controlPump $DEFAULT_PUMP_RUNTIME $DEFAULT_PUMP_SLEEPTIME
 }
 
@@ -70,7 +79,7 @@ default() {
 
 main() {
     echo $1
-msg=""
+    msg=""
     case "$1" in
 
         start)
@@ -90,12 +99,9 @@ msg=""
     esac
 
     if [[ $msg == *"Token expired"* ]]; then
-        echo "refreshing token"
-        API_TOKEN=$(getToken | jq -r '.result.token')
-        sed -i "$ d" ../conf/.env.sh
-        echo "export API_TOKEN='${API_TOKEN}'" >> "../conf/.env.sh"
+        refreshToken
         main $1
     fi
     exit 0
 }
-main $1
+main
