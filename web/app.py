@@ -52,9 +52,10 @@ async def run(cmd):
 
 
 def start(arg, arg2, arg3):
+    form = ReusableForm(request.form)
     print(arg, arg2, arg3)
     asyncio.run(run('./pumpctrl.sh ' +arg+' '+ arg2 + ' ' + arg3))
-    return render_template('pumpstatus.html', status="Pump Running")
+    return render_template('pump.html', form=form)
 
 
 if __name__ == '__main__':
