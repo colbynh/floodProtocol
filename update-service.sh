@@ -4,7 +4,7 @@ set -e
 
 # set username and password
 UNAME="guitaristcolby"
-UPASS="transam1"
+UPASS=""
 
 # get token to be able to talk to Docker Hub
 TOKEN=$(curl -s -H "Content-Type: application/json" -X POST -d '{"username": "'${UNAME}'", "password": "'${UPASS}'"}' https://hub.docker.com/v2/users/login/ | jq -r .token)
