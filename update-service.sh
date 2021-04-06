@@ -57,7 +57,7 @@ checkForUpdate() {
         echo $svctag
         if [[ "$maxtag" -gt "$svctag" ]]
         then    
-            docker service update --force --image guitaristcolby/flood-control:$svctag flood-prod
+            docker service update --force --image guitaristcolby/flood-control:$maxtag flood-prod
         fi
         sleep 5
     done
