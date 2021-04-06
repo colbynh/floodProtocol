@@ -7,6 +7,9 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 
+@app.route("/", methods=['GET'])
+def home():
+    return render_template('home.html', message='Welcome to the 111 Flood Page')
 
 class ReusableForm(Form):
     duration = TextField('duration:', validators=[validators.DataRequired()])
@@ -33,6 +36,8 @@ class ReusableForm(Form):
             flash('Error: All the form fields are required. ')
         
         return render_template('pump.html', form=form)
+
+
 
 
 
