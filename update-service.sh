@@ -52,7 +52,7 @@ checkForUpdate() {
     while [ true ]
     do 
         maxtag=$(getLatestImageNum)
-        svctag=$(docker service ls | awk '{print $5}' | grep flood-prod | cut -d ":" -f 2 | tail -n 1)
+        svctag=$(docker service ls | awk '{print $5}' | grep flood-control | cut -d ":" -f 2 | tail -n 1)
         echo $maxtag
         echo $svctag
         if [[ "$maxtag" -gt "$svctag" ]]
