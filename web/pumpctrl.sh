@@ -133,5 +133,5 @@ main() {
     fi
 }
 
-echo "$1 $2 $3" >> log.txt
+echo "args: $1 $2 $3" >> log.txt
 main start $1 $2 $3  >> log.txt
