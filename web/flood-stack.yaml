@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+  web-app:
+    image: guitaristcolby/flood-control
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./conf:/web/conf

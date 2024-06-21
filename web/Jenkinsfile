@@ -1,0 +1,30 @@
+pipeline {
+    environment {
+        registry = "guitaristcolby/flood-control" 
+        registryCredential = 'dockerhubcreds' 
+    }
+    agent any
+    stages {
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Build Image') {
+            steps {
+                script {
+                    dockerImage = docker.build(registry + ":$BUILD_NUMBER", "./web")
+                }
+            }
+        }
+        stage('Push to Dockerhub'){
+            steps {
+                script {
+                    docker.withRegistry( '', registryCredential ) { 
+                        dockerImage.push() 
+                    }
+                }
+            }
+        }
+    }
+}
